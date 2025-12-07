@@ -34,6 +34,15 @@ To solve this computationally, the continuous problem is discretized into a line
 * **$A$**: A **Sparse Matrix** representing the Discrete Laplacian (using the standard 5-point stencil).
 * **$b$**: The guidance vector containing the Laplacian of the source image + the intensities of the target image at the boundaries.
 
+### Implementation Specifics: Importing vs. Mixing
+
+It is important to note that this repository implements the **"Importing Gradients"** method (Equation 2 in Pérez et al.). 
+
+* **Importing Gradients (Implemented):** The gradient field of the target region is *completely replaced* by the source gradients. This is ideal for inserting opaque objects (e.g., adding a person to a landscape).
+* **Mixing Gradients (Not Implemented):** A variation where the algorithm preserves the texture of the background if it is more salient than the object. This is typically used for transparent effects (e.g., writing text on a textured wall).
+
+By solving $\Delta f = \Delta g$, we strictly enforce the source image's texture, allowing the boundary conditions to handle the lighting transition.
+
 ## Project Structure
 
 The repository is structured as a progressive study, moving from 1D intuition to full 2D RGB blending.
